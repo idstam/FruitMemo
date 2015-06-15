@@ -1,28 +1,35 @@
 
 // Project: FruitMemo 
 // Created: 2015-06-14
-
+#option_explicit
 
 // set window properties
+Global screenWidth
+Global screenHeight
+screenWidth = 320
+screenHeight = 480
+
 SetWindowTitle( "FruitMemo" )
-SetWindowSize( 1024, 768, 0 )
+SetVirtualResolution ( screenWidth, screenHeight )
+SetWindowSize(640, 960, 0)
+//SetOrientationAllowed( 1, 1, 1, 1 )
 
-// set display properties
-SetVirtualResolution( 1024, 768 )
-SetOrientationAllowed( 1, 1, 1, 1 )
-
+#include "language.agc"
 #include "menue.agc"
-#include
+#include "start.agc"
+#include "game.agc"
+#include "credits.agc"
+#include "end_high_score.agc"
+#include "end_no_high_score.agc"
+#include "start.agc"
+
+
 initializeComponents()
 
-do
-    menue_showMenue()
-
-    Sync()
-loop
-
+lang_select()
+menue_showMenue()
 
 
 function initializeComponents()
-	menueState = 0
+	menue_init()
 endfunction
