@@ -69,6 +69,13 @@ foo as string
         texts[1] = "Start"
         texts[2] = "Info"
         texts[3] = "Avsluta"
+        texts[4] = "Du fick ihop"
+        texts[5] = "frukter."
+        texts[6] = "Spelet gjordes av"
+        texts[7] = "johan@jsi.se"
+        texts[8] = "Om du gillar det"
+        texts[9] = "får du gärna"
+        texts[10] = "donera"
         
         endcase
         case 2:
@@ -76,6 +83,13 @@ foo as string
         texts[1] = "Start"
         texts[2] = "Credits"
         texts[3] = "Exit"
+        texts[4] = "You got"
+        texts[5] = "fruits right."
+        texts[6] = "This game is made by"
+        texts[7] = "johan@jsi.se"
+        texts[8] = "If you like it"
+        texts[9] = "please make a"
+        texts[10] = "donation"
         endcase
     endselect
 endfunction

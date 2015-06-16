@@ -60,6 +60,7 @@ function menue_buttonHitTest(button as MENUE_ITEM)
 	x as integer
 	y as integer
 
+	//Check if the button is touched
 	ret = 0
 	if GetPointerPressed() = 1
 		x = ScreenToWorldX(GetPointerX())
@@ -67,7 +68,7 @@ function menue_buttonHitTest(button as MENUE_ITEM)
 		if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
 		if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
 	endif
-
+	
 endfunction ret
 //This is a dispacher function that helps in showing the right screen
 //I'm nt really sure I will keep this since it makes this file application specific.
@@ -91,4 +92,24 @@ function menue_showMenue()
 	endcase
 		
 	endselect
+endfunction
+
+function menue_createCenterScreenText(txt as string, size as integer, y as float)
+	
+	x as integer
+	m as integer
+	t as integer
+	m = GetVirtualWidth() / 2
+	t = CreateText(txt)
+	SetTextSize(t, size)
+	x = m - (GetTextTotalWidth(t) / 2)
+	SetTextPosition(t, x, y)
+	
+endfunction t
+
+function menue_deleteTexts(t as integer[])
+	i as integer
+	for i = 1 to t.length
+		DeleteText(t[i])
+	next i
 endfunction

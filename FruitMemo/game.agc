@@ -20,12 +20,13 @@ function game_show()
 
 	do
         if GetPointerPressed() = 1
-            if menue_buttonHitTest(menueItems[1]) = 1
-				score = 0
-                exit
-            endif
             if menue_buttonHitTest(menueItems[2]) = 1
 				score = 100
+                exit
+            endif
+
+            if menue_buttonHitTest(menueItems[1]) = 1
+				score = 0
                 exit
             endif
         endif

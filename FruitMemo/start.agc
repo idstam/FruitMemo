@@ -15,12 +15,13 @@ function start_show()
         if GetPointerPressed() = 1
 
             if menue_buttonHitTest(menueItems[1]) = 1
+
 				start_destroyMenue()
                 score = game_show()
                 if score = 0
-					enh_show()
+					enh_show(score)
 				else
-					enh_show()
+					enh_show(score)
 				endif
 				start_createMenue()
             endif
