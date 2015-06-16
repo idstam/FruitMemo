@@ -62,13 +62,16 @@ function menue_buttonHitTest(button as MENUE_ITEM)
 
 	//Check if the button is touched
 	ret = 0
-	if GetPointerPressed() = 1
-		x = ScreenToWorldX(GetPointerX())
-		y = ScreenToWorldY(GetPointerY())
-		if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
-		if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
-	endif
 	
+	x = ScreenToWorldX(GetPointerX())
+	y = ScreenToWorldY(GetPointerY())
+	if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
+	if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
+
+	do
+		Sync()
+		if GetPointerState() = 0 THEN exit
+	loop
 endfunction ret
 //This is a dispacher function that helps in showing the right screen
 //I'm nt really sure I will keep this since it makes this file application specific.

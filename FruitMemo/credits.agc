@@ -15,6 +15,7 @@ function credits_show()
 	textSize = 21
 	t[1] = menue_createCenterScreenText(lang_getText(6), textSize, 100)
 	t[2] = menue_createCenterScreenText(lang_getText(7), textSize, 130)
+	
 	t[3] = menue_createCenterScreenText(lang_getText(8), textSize, 180)
 	t[4] = menue_createCenterScreenText(lang_getText(9), textSize, 210)
 	

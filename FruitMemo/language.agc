@@ -73,9 +73,9 @@ foo as string
         texts[5] = "frukter."
         texts[6] = "Spelet gjordes av"
         texts[7] = "johan@jsi.se"
-        texts[8] = "Om du gillar det"
-        texts[9] = "får du gärna"
-        texts[10] = "donera"
+        texts[8] = "Om du vill"
+        texts[9] = "kontakta mig"
+        texts[10] = "klicka här"
         
         endcase
         case 2:
@@ -87,9 +87,9 @@ foo as string
         texts[5] = "fruits right."
         texts[6] = "This game is made by"
         texts[7] = "johan@jsi.se"
-        texts[8] = "If you like it"
-        texts[9] = "please make a"
-        texts[10] = "donation"
+        texts[8] = "If you want to"
+        texts[9] = "contact me"
+        texts[10] = "press here"
         endcase
     endselect
 endfunction
