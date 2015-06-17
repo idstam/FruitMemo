@@ -10,6 +10,12 @@ function game_show()
 	tiles as integer[4]
 	images as integer[8]
 	trail as integer[0]
+
+	//Hide the pineapple since we don't want it och the game screen
+	SetSpriteVisible(menueBackgroundSprite, 0)
+	
+	//Initialize the game tiles and their images
+	game_init(tiles, images)
 	
 	//These four are for testing
 	trail.insert(1)
@@ -17,19 +23,20 @@ function game_show()
 	trail.insert(1)
 	trail.insert(1)
 	
-	game_init(tiles, images)
-	
-	
 	
 	do
 		game_playTrail(trail, tiles, images)
         Sync()
+        //If the user fails to remember the trail userInput will return 0
         if game_userInput() = 0 then exit
         Sync()
 	loop
 
+	//Remove all resources needed for the game tiles and images
 	game_destroy(tiles, images)
 	
+	//Show the pineapple again
+	SetSpriteVisible(menueBackgroundSprite, 1)
 endfunction trail.length - 1
 
 function game_userInput()
@@ -44,9 +51,9 @@ endfunction 0
 function game_playTrail(trail as integer[], tiles as integer[], images as integer[])
 	i as integer
 	for i = 1 to trail.length
-		SetSpriteImage(tiles[trail[i]], images[trail[i] + 4])
-		game_pause(0.7)
 		SetSpriteImage(tiles[trail[i]], images[trail[i]])
+		game_pause(0.7)
+		SetSpriteImage(tiles[trail[i]], images[trail[i] + 4])
 		game_pause(0.4)
 	next i
 	

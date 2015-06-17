@@ -8,9 +8,9 @@
 function credits_show()
 	t as integer[4]
 	textSize as integer
-	menueItems as MENUE_ITEM[2]
+	menueItems as MENUE_BUTTON[2]
 	
-	menueItems[1] = menue_createButton(lang_getText(1), 350)
+	menueItems[1] = menue_createButton(lang_getText(1), 350, buttonImageUp, buttonImageDown)
 	
 	textSize = 21
 	t[1] = menue_createCenterScreenText(lang_getText(6), textSize, 100)
@@ -20,7 +20,7 @@ function credits_show()
 	t[4] = menue_createCenterScreenText(lang_getText(9), textSize, 210)
 	
 
-	menueItems[2] = menue_createButton(lang_getText(10), 240)
+	menueItems[2] = menue_createButton(lang_getText(10), 240, buttonImageUp, buttonImageDown)
 	
 	do
         if GetPointerPressed() = 1

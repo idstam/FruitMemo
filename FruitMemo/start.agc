@@ -6,7 +6,8 @@
 */
 
 function start_show()
-	start_createMenue()
+	menueItems as MENUE_BUTTON[3]
+	start_createMenue(menueItems)
 	
 	x as integer
 	y as integer
@@ -16,23 +17,24 @@ function start_show()
 
             if menue_buttonHitTest(menueItems[1]) = 1
 
-				start_destroyMenue()
+				start_destroyMenue(menueItems)
                 score = game_show()
                 if score = 0
 					enh_show(score)
 				else
 					enh_show(score)
 				endif
-				start_createMenue()
+				start_createMenue(menueItems)
             endif
             
             if menue_buttonHitTest(menueItems[2]) = 1
-				start_destroyMenue()
+				start_destroyMenue(menueItems)
                 credits_show()
-                start_createMenue()
+                start_createMenue(menueItems)
             endif
             
             if menue_buttonHitTest(menueItems[3]) = 1
+				start_destroyMenue(menueItems)
                 exit
             endif
         endif
@@ -40,20 +42,20 @@ function start_show()
         Sync()
 	loop
 	
-	start_destroyMenue()
+	start_destroyMenue(menueItems)
 endfunction
 
-function start_createMenue()
+function start_createMenue(menueItems ref as MENUE_BUTTON[])
 	buttonTopStart as integer
-	dim menueItems[3] as MENUE_ITEM
+	
 	buttonTopStart = 150
 	
-	menueItems[1] = menue_createButton(lang_getText(1), buttonTopStart) //Start
-	menueItems[2] = menue_createButton(lang_getText(2), buttonTopStart + 70) //Credits
-	menueItems[3] = menue_createButton(lang_getText(3), buttonTopStart + 140) //Exit
+	menueItems[1] = menue_createButton(lang_getText(1), buttonTopStart, buttonImageUp, buttonImageDown) //Start
+	menueItems[2] = menue_createButton(lang_getText(2), buttonTopStart + 70, buttonImageUp, buttonImageDown) //Credits
+	menueItems[3] = menue_createButton(lang_getText(3), buttonTopStart + 140, buttonImageUp, buttonImageDown) //Exit
 endfunction
 	
-function start_destroyMenue()
+function start_destroyMenue(menueItems as MENUE_BUTTON[])
 	menue_destroyButton(menueItems[1])
 	menue_destroyButton(menueItems[2])
 	menue_destroyButton(menueItems[3])

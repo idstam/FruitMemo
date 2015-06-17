@@ -14,7 +14,7 @@ function enh_show(score as integer)
 	secondScoreText as integer
 	thirdScoreText as integer
 	pos as integer
-	dim menueItems[1] as MENUE_ITEM
+	dim menueItems[1] as MENUE_BUTTON
 	buttonTopStart = 250
 	
 	firstScoreText = CreateText(lang_getText(4))
@@ -36,7 +36,7 @@ function enh_show(score as integer)
 	pos = 160 - (GetTextTotalWidth(thirdScoreText) / 2)
 	SetTextPosition(thirdScoreText, pos, 160)
 	
-	menueItems[1] = menue_createButton(lang_getText(1), buttonTopStart)
+	menueItems[1] = menue_createButton(lang_getText(1), buttonTopStart, buttonImageUp, buttonImageDown)
 
 	do
         if GetPointerPressed() = 1
