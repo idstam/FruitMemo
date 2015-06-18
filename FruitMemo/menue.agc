@@ -78,38 +78,54 @@ function menue_buttonHitTest(button as MENUE_BUTTON)
 	if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
 	if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
 	if ret = 1 
-		SetSpriteFrame(button.Sprite, 2)
+		menue_downButton(button)
 	endif
+	Sync()
+	
 	do
 		Sync()
 		if GetPointerState() = 0 THEN exit
 	loop
 	
-	SetSpriteFrame(button.Sprite, 1)
+	menue_upButton(button)
 endfunction ret
-//This is a dispacher function that helps in showing the right screen
-//I'm nt really sure I will keep this since it makes this file application specific.
-//I'd rather keep on using this without modofication i future applications.
-function menue_showMenue()
-	select menueState
-	case 0 //- Application started
-		start_show()
-	endcase
+
+function menue_getPressedButton(buttons as MENUE_BUTTON[])
+	i as integer
+	noButton as MENUE_BUTTON
 	
-	case 1 //- Game started
-	endcase
+	for i = 1 to 4
+		if menue_buttonHitTest(buttons[i]) = 1 
+			exitfunction buttons[i]
+		endif
+	next i
 	
-	case 2 //- Game ended new high score
-	endcase
-	
-	case 3 //- Game ended no high score
-	endcase
-	
-	case 4 //- Show credits
-	endcase
-		
-	endselect
+endfunction noButton
+
+
+function menue_upAll(tiles as MENUE_BUTTON[])
+	i as integer
+	for i = 1 to tiles.length
+		menue_upButton(tiles[i])
+	next i
 endfunction
+
+function menue_upButton(tile as MENUE_BUTTON)
+	SetSpriteImage(tile.Sprite, tile.ImageUp)
+endfunction
+
+
+function menue_downAll(tiles as MENUE_BUTTON[])
+	i as integer
+	for i = 1 to tiles.length
+		menue_downButton(tiles[i])
+	next i
+endfunction
+
+function menue_downButton(tile as MENUE_BUTTON)
+	SetSpriteImage(tile.Sprite, tile.ImageDown)
+endfunction
+
 
 function menue_createCenterScreenText(txt as string, size as integer, y as float)
 	

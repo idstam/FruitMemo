@@ -23,12 +23,13 @@ function credits_show()
 	menueItems[2] = menue_createButton(lang_getText(10), 240, buttonImageUp, buttonImageDown)
 	
 	do
-        if GetPointerPressed() = 1
+        if GetPointerState() = 1
             if menue_buttonHitTest(menueItems[1]) = 1
                 exit
             endif
             if menue_buttonHitTest(menueItems[2]) = 1
-                OpenBrowser("http://jsi.se")
+                //OpenBrowser("http://jsi.se")
+                exit
             endif
         endif
 

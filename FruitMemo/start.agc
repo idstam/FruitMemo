@@ -13,7 +13,7 @@ function start_show()
 	y as integer
 	score as integer
 	do
-        if GetPointerPressed() = 1
+        if GetPointerState() = 1
 
             if menue_buttonHitTest(menueItems[1]) = 1
 

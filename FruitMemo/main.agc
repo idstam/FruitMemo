@@ -27,7 +27,7 @@ SetWindowSize(640, 960, 0)
 initializeComponents()
 
 lang_select()
-menue_showMenue()
+start_show()
 
 
 function initializeComponents()

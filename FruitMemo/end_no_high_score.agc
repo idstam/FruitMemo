@@ -14,7 +14,7 @@ function enh_show(score as integer)
 	secondScoreText as integer
 	thirdScoreText as integer
 	pos as integer
-	dim menueItems[1] as MENUE_BUTTON
+	menueItems as MENUE_BUTTON[1]
 	buttonTopStart = 250
 	
 	firstScoreText = CreateText(lang_getText(4))
