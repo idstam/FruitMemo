@@ -90,7 +90,11 @@ function button_buttonHitTest(button as button_BUTTON)
 	x = ScreenToWorldX(GetPointerX())
 	y = ScreenToWorldY(GetPointerY())
 	if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
-	if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
+	if ret = 0
+		if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
+		
+	endif
+	
 	if ret = 1 
 		button_downButton(button)		
 		do

@@ -19,7 +19,9 @@ function start_show()
 
 				start_destroyMenue(menueItems)
                 game_show()
-				enh_show() //losingPosition, totalLength are globals
+                if losingPosition <> -2
+					enh_show() //losingPosition, totalLength are globals
+				endif
 				start_createMenue(menueItems)
             elseif button_buttonHitTest(menueItems[2]) = 1
 				start_destroyMenue(menueItems)

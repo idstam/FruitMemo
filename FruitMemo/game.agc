@@ -29,25 +29,33 @@ function game_show()
 		trail.insert(Random(1, 4))
 		
 		//Show the current trail
-		game_playTrail(trail, tiles)
-        Sync()
-        
-        //Loop through the trail and wait for user input at every iteration
-        for trailPos = 1 to trail.length
-			//Wait for the user to press a tile
-			tileIndex =  game_waitForUserInput(tiles)
-			
-			//If the pressed tile is not the expected one, exit the game
-			if tileIndex <> trail[trailPos]
-				//I keep track of where the user lost it for future reference
-				//Currently I will only show the length of the trail before the failing round
-				endGame = trailPos -1
-				exit
-			endif
-			button_pause(0.5)
+		if game_playTrail(trail, tiles) = 0
+				
 			Sync()
-		next trailPos
-        
+			
+			//Loop through the trail and wait for user input at every iteration
+			for trailPos = 1 to trail.length
+				//Wait for the user to press a tile
+				tileIndex =  game_waitForUserInput(tiles)
+				
+				if tileIndex = -1
+					endgame = -2
+					exit
+				endif
+					
+				//If the pressed tile is not the expected one, exit the game
+				if tileIndex <> trail[trailPos]
+					//I keep track of where the user lost it for future reference
+					//Currently I will only show the length of the trail before the failing round
+					endGame = trailPos -1
+					exit
+				endif
+				button_pause(0.5)
+				Sync()
+			next trailPos
+		else
+			endgame = -2
+        endif
         // a loosing move
         if endGame <> -1 then exit
         
@@ -68,6 +76,8 @@ endfunction trail.length - 1
 function game_waitForUserInput(tiles as button_BUTTON[])
 	tileIndex as integer
 	do
+		if GetRawKeyState(27) = 1 then exitfunction -1
+		
 		if GetPointerState() = 1
 			tileIndex = button_getPressedButton(tiles)
 			exitfunction tileIndex
@@ -78,20 +88,26 @@ endfunction 0
 
 
 function game_playTrail(trail as integer[], tiles as button_BUTTON[])
-	
+	ret as integer = 0
 	i as integer
 	for i = 1 to trail.length
 		SetSpriteImage(tiles[trail[i]].Sprite, tiles[trail[i]].ImageDown)
 		button_pause(0.6)
 		SetSpriteImage(tiles[trail[i]].Sprite, tiles[trail[i]].ImageUp)
 		button_pause(0.4)
+		
+		if GetRawKeyState(27) = 1 
+			 exitfunction -1
+		endif
+		
+		Sync()
 	next i
 	
 	game_blinkAll(0.5, tiles)
 	//game_blinkAll(0.5, tiles)
 	//game_blinkAll(0.5, tiles)
 	
-endfunction
+endfunction 0
 
 function game_blinkAll(pause as float, tiles as button_BUTTON[])
 	button_downAll(tiles)
