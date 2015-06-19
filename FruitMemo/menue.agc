@@ -92,17 +92,14 @@ function button_buttonHitTest(button as button_BUTTON)
 	if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
 	if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
 	if ret = 1 
-		button_downButton(button)
-		
-	endif
-	Sync()
-	
-	do
-		Sync()
-		if GetPointerState() = 0 THEN exit
-	loop
-	
-	button_upButton(button)
+		button_downButton(button)		
+		do
+			Sync()
+			if GetPointerState() = 0 THEN exit
+		loop
+		button_pause(0.2)
+		button_upButton(button)
+	endif	
 endfunction ret
 
 function button_pause(p as float)
@@ -171,4 +168,7 @@ function button_deleteTexts(t as integer[])
 	for i = 1 to t.length
 		DeleteText(t[i])
 	next i
+endfunction
+
+function button_sync()
 endfunction

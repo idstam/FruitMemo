@@ -45,3 +45,8 @@ function initializeComponents()
 
 
 endfunction
+
+function main_sync()
+	
+	Sync()
+endfunction
