@@ -6,7 +6,7 @@
 */
 
 function start_show()
-	menueItems as MENUE_BUTTON[3]
+	menueItems as BUTTON_BUTTON[4]
 	start_createMenue(menueItems)
 	
 	x as integer
@@ -15,26 +15,22 @@ function start_show()
 	do
         if GetPointerState() = 1
 
-            if menue_buttonHitTest(menueItems[1]) = 1
+            if button_buttonHitTest(menueItems[1]) = 1
 
 				start_destroyMenue(menueItems)
-                score = game_show()
-                if score = 0
-					enh_show(score)
-				else
-					enh_show(score)
-				endif
+                game_show()
+				enh_show() //losingPosition, totalLength are globals
 				start_createMenue(menueItems)
-            endif
-            
-            if menue_buttonHitTest(menueItems[2]) = 1
+            elseif button_buttonHitTest(menueItems[2]) = 1
 				start_destroyMenue(menueItems)
                 credits_show()
                 start_createMenue(menueItems)
-            endif
-            
-            if menue_buttonHitTest(menueItems[3]) = 1
+            elseif button_buttonHitTest(menueItems[3]) = 1
 				start_destroyMenue(menueItems)
+                how_show()
+                start_createMenue(menueItems)
+            elseif button_buttonHitTest(menueItems[4]) = 1
+				//start_destroyMenue(menueItems)
                 exit
             endif
         endif
@@ -45,18 +41,17 @@ function start_show()
 	start_destroyMenue(menueItems)
 endfunction
 
-function start_createMenue(menueItems ref as MENUE_BUTTON[])
+function start_createMenue(menueItems ref as BUTTON_BUTTON[])
 	buttonTopStart as integer
 	
 	buttonTopStart = 150
 	
-	menueItems[1] = menue_createButton(lang_getText(1), buttonTopStart, buttonImageUp, buttonImageDown) //Start
-	menueItems[2] = menue_createButton(lang_getText(2), buttonTopStart + 70, buttonImageUp, buttonImageDown) //Credits
-	menueItems[3] = menue_createButton(lang_getText(3), buttonTopStart + 140, buttonImageUp, buttonImageDown) //Exit
+	menueItems[1] = button_createButton(lang_getText(1), buttonTopStart, buttonImageUp, buttonImageDown, 50) //Start
+	menueItems[2] = button_createButton(lang_getText(2), buttonTopStart + 70, buttonImageUp, buttonImageDown, 50) //Credits
+	menueItems[3] = button_createButton(lang_getText(11), buttonTopStart + 140, buttonImageUp, buttonImageDown, 50) //Exit
+	menueItems[4] = button_createButton(lang_getText(3), buttonTopStart + 210, buttonImageUp, buttonImageDown, 50) //Exit
 endfunction
 	
-function start_destroyMenue(menueItems as MENUE_BUTTON[])
-	menue_destroyButton(menueItems[1])
-	menue_destroyButton(menueItems[2])
-	menue_destroyButton(menueItems[3])
+function start_destroyMenue(menueItems as BUTTON_BUTTON[])
+	button_destroyButtons(menueItems)
 endfunction

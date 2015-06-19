@@ -12,7 +12,7 @@ Global lang_img_sv
 Global lang
 
 function lang_select()
-	lang = 2
+	lang = 1
 	
     if lang = 0
         init_lang_menu()
@@ -56,12 +56,13 @@ function delete_lang_menu()
 endfunction
 
 function lang_getText(idx)
+foo as string
 res as string 
 res = texts[idx]
 endfunction res
 
 function set_texts()
-DIM texts[11] as String
+DIM texts[20] as String
 foo as string
     select lang
         case 1:
@@ -69,32 +70,38 @@ foo as string
         texts[1] = "Start"
         texts[2] = "Info"
         texts[3] = "Avsluta"
-        texts[4] = "Du fick ihop"
-        texts[5] = "frukter."
-        texts[6] = "Spelet gjordes av"
-        texts[7] = "johan@jsi.se"
-        texts[8] = "Om du vill"
-        texts[9] = "kontakta mig"
-        texts[10] = "klicka hÃ¤r"
-        
+        texts[4] = "Du  fick  ihop"
+        texts[5] = "frukter  totalt."
+        texts[6] = "Spelet  gjordes  av"
+        texts[7] = "Johan  Idstam"
+        texts[8] = "Om  du  vill"
+        texts[9] = "kontakta  mig"
+        texts[10] = "klicka  här"
+        texts[11] = "Hur?"
+        foo = "Kom  ihåg  spåret|av  frukter  som|det  visas  för  dig.| |Tryck  på  dem  i|samma  ordning.| |Hur  många  kommer|du  ihåg?"
+        texts[12] = lang_insertLinebreaks(foo, "|")
+
         endcase
         case 2:
         texts[0] = "English"
         texts[1] = "Start"
         texts[2] = "Credits"
         texts[3] = "Exit"
-        texts[4] = "You got"
-        texts[5] = "fruits right."
-        texts[6] = "This game is made by"
-        texts[7] = "johan@jsi.se"
-        texts[8] = "If you want to"
-        texts[9] = "contact me"
-        texts[10] = "press here"
+        texts[4] = "You  got  at  most"
+        texts[5] = "fruits  right."
+        texts[6] = "This  game  was  made"
+        texts[7] = "by  Johan  Idstam"
+        texts[8] = "If  you  want  to"
+        texts[9] = "contact  me"
+        texts[10] = "press  here"
+        texts[11] = "How?"
+        foo = "Remember  the  trail|of  fruits  as  they  are|shown  to  you.| |Then  touch  them|in  the  same  order.| |How  many  can  you|remember?"
+        texts[12] = lang_insertLinebreaks(foo, "|")
         endcase
     endselect
 endfunction
 
-function insert_linebreaks(text$, delim$)
+function lang_insertLinebreaks(text$, delim$)
 	lines as integer
 	l as integer
     lines = CountStringTokens(text$, delim$)

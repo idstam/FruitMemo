@@ -10,10 +10,10 @@
 global menueState as integer
 Global buttonImageUp
 Global buttonImageDown
-Global blendPineappleImage
+Global pineappleImage
 Global menueBackgroundSprite
 
-TYPE MENUE_BUTTON
+TYPE BUTTON_BUTTON
     Sprite as Integer
     Label  as String
     Text   as Integer
@@ -22,22 +22,22 @@ TYPE MENUE_BUTTON
 ENDTYPE
 
 //Initialize some stuff that will be needed throughout the application
-function menue_init()
+function button_init()
 	menueState = 0
 	buttonImageUp = LoadImage("buttonUp.png")
 	buttonImageDown = LoadImage("buttonDown.png")
-	blendPineappleImage = LoadImage("pale_pineapple.png")
-	menueBackgroundSprite = CreateSprite(blendPineappleImage)
+	pineappleImage = LoadImage("pineapple.png")
+	menueBackgroundSprite = CreateSprite(pineappleImage)
 	SetSpriteSize(menueBackgroundSprite, screenWidth, screenHeight)
 endfunction
 
 //Use this function from anywhere to create a button with text
-function menue_createButton(label as string, y as float, imageUp as integer, imageDown as integer)
+function button_createButton(label as string, y as float, imageUp as integer, imageDown as integer, textSize as integer)
 	buttonLeft as integer
 	textLeft as integer
 	buttonLeft = 56
 	
-	ret as MENUE_BUTTON
+	ret as button_BUTTON
 	ret.Label = label
 	ret.Text = CreateText(label)
 	ret.Sprite = CreateSprite(imageUp)
@@ -48,24 +48,38 @@ function menue_createButton(label as string, y as float, imageUp as integer, ima
 	AddSpriteAnimationFrame(ret.Sprite, ret.ImageDown)
 	SetSpriteFrame(ret.Sprite, 1)
 	SetSpritePosition(ret.Sprite, buttonLeft, y)
-	SetTextSize(ret.Text, 25)
+	SetTextSize(ret.Text, textSize)
+	SetTextSpacing(ret.Text, -5)
 	textLeft = GetTextTotalWidth(ret.Text) / 2
 	textLeft = 100 - textLeft
-	SetTextPosition(ret.Text, buttonLeft + textLeft, y + 20)
+	
+	midSpriteY as float
+	midSpriteY = GetSpriteHeight(ret.Sprite) / 2
+	midTextY as float
+	midTextY = GetTextTotalHeight(ret.Text) / 2
+	
+	SetTextPosition(ret.Text, buttonLeft + textLeft, y + midSpriteY - midTextY)
 	SetTextVisible(ret.Text, 1)
 	
 endfunction ret
 
 //Use this function from anywhere to unload a previously used button
-function menue_destroyButton(button as MENUE_BUTTON)
+function button_destroyButton(button as button_BUTTON)
 	SetSpriteVisible(button.Sprite, 0)
 	SetTextVisible(button.Text, 0)
 	DeleteText(button.Text)
-	DeleteSprite(button.Sprite)
+	DeleteSprite(button.Sprite)	
+endfunction
+
+function button_destroyButtons(buttons as button_BUTTON[])
+	i as integer
+	for i = 1 to buttons.length
+		button_destroyButton(buttons[i])
+	next i
 endfunction
 
 
-function menue_buttonHitTest(button as MENUE_BUTTON)
+function button_buttonHitTest(button as button_BUTTON)
 	ret as integer
 	x as integer
 	y as integer
@@ -78,7 +92,8 @@ function menue_buttonHitTest(button as MENUE_BUTTON)
 	if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
 	if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
 	if ret = 1 
-		menue_downButton(button)
+		button_downButton(button)
+		
 	endif
 	Sync()
 	
@@ -87,60 +102,71 @@ function menue_buttonHitTest(button as MENUE_BUTTON)
 		if GetPointerState() = 0 THEN exit
 	loop
 	
-	menue_upButton(button)
+	button_upButton(button)
 endfunction ret
 
-function menue_getPressedButton(buttons as MENUE_BUTTON[])
+function button_pause(p as float)
 	i as integer
-	noButton as MENUE_BUTTON
+	t as float
+	t = Timer()
+	do
+		Sync()
+		if Timer() - t > p then exit
+	loop
+	
+endfunction
+
+function button_getPressedButton(buttons as button_BUTTON[])
+	i as integer
 	
 	for i = 1 to 4
-		if menue_buttonHitTest(buttons[i]) = 1 
-			exitfunction buttons[i]
+		if button_buttonHitTest(buttons[i]) = 1 
+			exitfunction i
 		endif
 	next i
 	
-endfunction noButton
+endfunction 0
 
 
-function menue_upAll(tiles as MENUE_BUTTON[])
+function button_upAll(tiles as button_BUTTON[])
 	i as integer
 	for i = 1 to tiles.length
-		menue_upButton(tiles[i])
+		button_upButton(tiles[i])
 	next i
 endfunction
 
-function menue_upButton(tile as MENUE_BUTTON)
+function button_upButton(tile as button_BUTTON)
 	SetSpriteImage(tile.Sprite, tile.ImageUp)
 endfunction
 
 
-function menue_downAll(tiles as MENUE_BUTTON[])
+function button_downAll(tiles as button_BUTTON[])
 	i as integer
 	for i = 1 to tiles.length
-		menue_downButton(tiles[i])
+		button_downButton(tiles[i])
 	next i
 endfunction
 
-function menue_downButton(tile as MENUE_BUTTON)
+function button_downButton(tile as button_BUTTON)
 	SetSpriteImage(tile.Sprite, tile.ImageDown)
 endfunction
 
 
-function menue_createCenterScreenText(txt as string, size as integer, y as float)
+function button_createCenterScreenText(txt as string, size as integer, y as float)
 	
 	x as integer
 	m as integer
 	t as integer
 	m = GetVirtualWidth() / 2
 	t = CreateText(txt)
+	SetTextSpacing(t, -5)
 	SetTextSize(t, size)
 	x = m - (GetTextTotalWidth(t) / 2)
 	SetTextPosition(t, x, y)
 	
 endfunction t
 
-function menue_deleteTexts(t as integer[])
+function button_deleteTexts(t as integer[])
 	i as integer
 	for i = 1 to t.length
 		DeleteText(t[i])

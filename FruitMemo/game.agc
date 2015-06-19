@@ -5,29 +5,52 @@
 	This is the code to manage the actual game.
 */
 
+Global losingPosition as integer
+Global totalLength as integer
+
 function game_show()
 	score as integer
-	tiles as MENUE_BUTTON[4]
+	tiles as button_BUTTON[4]
+	tileIndex as integer
 	trail as integer[0]
-
+	trailPos as integer
+	endGame as integer
+	
 	//Hide the pineapple since we don't want it och the game screen
 	SetSpriteVisible(menueBackgroundSprite, 0)
 	
 	//Initialize the game tiles and their images
 	game_init(tiles)
 	
-	//These four are for testing
-	trail.insert(1)
-	trail.insert(1)
-	trail.insert(1)
-	trail.insert(1)
 	
-	
+	endGame = -1
 	do
+		//Add a fruit to the trail
+		trail.insert(Random(1, 4))
+		
+		//Show the current trail
 		game_playTrail(trail, tiles)
         Sync()
-        //If the user fails to remember the trail userInput will return 0
-        if game_userInput(tiles) = 0 then exit
+        
+        //Loop through the trail and wait for user input at every iteration
+        for trailPos = 1 to trail.length
+			//Wait for the user to press a tile
+			tileIndex =  game_waitForUserInput(tiles)
+			
+			//If the pressed tile is not the expected one, exit the game
+			if tileIndex <> trail[trailPos]
+				//I keep track of where the user lost it for future reference
+				//Currently I will only show the length of the trail before the failing round
+				endGame = trailPos -1
+				exit
+			endif
+			button_pause(0.5)
+			Sync()
+		next trailPos
+        
+        // a loosing move
+        if endGame <> -1 then exit
+        
         Sync()
 	loop
 
@@ -36,57 +59,52 @@ function game_show()
 	
 	//Show the pineapple again
 	SetSpriteVisible(menueBackgroundSprite, 1)
+	
+	losingPosition = endGame
+	totalLength = trail.length - 1 //since we got here by failing, the longest successful trail was the last one
+	
 endfunction trail.length - 1
 
-function game_userInput(tiles as MENUE_BUTTON[])
-	pressedTile as MENUE_BUTTON
+function game_waitForUserInput(tiles as button_BUTTON[])
+	tileIndex as integer
 	do
 		if GetPointerState() = 1
-			pressedTile = menue_getPressedButton(tiles)
-			if pressedTile.Sprite <> 0
-				
-			endif
+			tileIndex = button_getPressedButton(tiles)
+			exitfunction tileIndex
 		endif
 		Sync()
 	loop
 endfunction 0
 
 
-function game_playTrail(trail as integer[], tiles as MENUE_BUTTON[])
+function game_playTrail(trail as integer[], tiles as button_BUTTON[])
+	
 	i as integer
 	for i = 1 to trail.length
 		SetSpriteImage(tiles[trail[i]].Sprite, tiles[trail[i]].ImageDown)
-		game_pause(0.7)
+		button_pause(0.7)
 		SetSpriteImage(tiles[trail[i]].Sprite, tiles[trail[i]].ImageUp)
-		game_pause(0.4)
+		button_pause(0.4)
 	next i
 	
 	game_blinkAll(0.5, tiles)
-	game_blinkAll(0.5, tiles)
-	game_blinkAll(0.5, tiles)
+	//game_blinkAll(0.5, tiles)
+	//game_blinkAll(0.5, tiles)
 	
 endfunction
 
-function game_blinkAll(pause as float, tiles as MENUE_BUTTON[])
-	menue_downAll(tiles)
-	game_pause(pause)
-	menue_upAll(tiles)
-	game_pause(pause)
+function game_blinkAll(pause as float, tiles as button_BUTTON[])
+	button_downAll(tiles)
+	button_pause(pause)
+	button_upAll(tiles)
+	button_pause(pause)
 endfunction
 
+function game_init(tiles ref as button_BUTTON[])
+	//Reset score from previous round
+	losingPosition = 0
+	totalLength = 0
 
-function game_pause(p as float)
-	i as integer
-	t as float
-	t = Timer()
-	do
-		Sync()
-		if Timer() - t > p then exit
-	loop
-	
-endfunction
-
-function game_init(tiles ref as MENUE_BUTTON[])
 	images as integer[8]
 
 	images[1] = LoadImage("apple_grey.png")
@@ -115,7 +133,7 @@ function game_init(tiles ref as MENUE_BUTTON[])
 endfunction tiles
 
 function game_createTile(imageUp as integer, imageDown as integer)
-	tile as MENUE_BUTTON
+	tile as button_BUTTON
 	tile.Sprite = CreateSprite(imageUp)
 	tile.ImageUp = imageUp
 	tile.ImageDown = imageDown
@@ -123,7 +141,7 @@ function game_createTile(imageUp as integer, imageDown as integer)
 	SetSpriteSize(tile.Sprite, 160, -1)
 
 endfunction tile
-function game_destroy(tiles as MENUE_BUTTON[])
+function game_destroy(tiles as button_BUTTON[])
 	i as integer
 	
 	for i = 1 to tiles.length
@@ -131,5 +149,5 @@ function game_destroy(tiles as MENUE_BUTTON[])
 		if GetImageExists(tiles[i].ImageUp) = 1 then DeleteImage(tiles[i].ImageUp)
 		if GetImageExists(tiles[i].ImageDown) = 1 then DeleteImage(tiles[i].ImageDown)
 	next i
-	
+	button_destroyButtons(tiles)
 endfunction
