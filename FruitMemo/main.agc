@@ -3,6 +3,7 @@
 // Created: 2015-06-14
 #option_explicit
 
+
 // set window properties
 Global screenWidth
 Global screenHeight
@@ -15,8 +16,9 @@ SetWindowSize(640, 960, 0)
 SetClearColor(150, 210, 234)
 //SetOrientationAllowed( 1, 1, 1, 1 )
 
-#include "language.agc"
 #include "menue.agc"
+#include "settings.agc"
+#include "language.agc"
 #include "start.agc"
 #include "game.agc"
 #include "credits.agc"
@@ -27,7 +29,7 @@ SetClearColor(150, 210, 234)
 
 
 initializeComponents()
-
+settings_readSettings()
 lang_select()
 start_show()
 

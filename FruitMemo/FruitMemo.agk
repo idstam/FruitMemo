@@ -10,15 +10,11 @@ FILE_6=end_no_high_score.agc;-1
 FILE_7=start.agc;-1
 FILE_8=language.agc;-1
 FILE_9=how.agc;-1
+FILE_10=settings.agc;-1
 
 [files]
-FILE_NAME_0=0;main.agc;616;0
-FILE_NAME_1=0;menue.agc;3811;2
-FILE_NAME_2=0;game.agc;3835;5
-FILE_NAME_3=0;credits.agc;327;3
-FILE_NAME_4=0;start.agc;1784;4
-FILE_NAME_5=1;language.agc;250;6
-FILE_NAME_6=0;how.agc;259;1
+FILE_NAME_0=0;main.agc;1043;0
+FILE_NAME_1=1;settings.agc;0;1
 
 [project]
 description=

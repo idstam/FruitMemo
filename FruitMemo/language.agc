@@ -9,51 +9,40 @@ Global lang_sprite_en
 Global lang_sprite_sv
 Global lang_img_en
 Global lang_img_sv
-Global lang
+Global lang_code
 
 function lang_select()
-	lang = 1
-	
-    if lang = 0
-        init_lang_menu()
-        lang_loop()
-        delete_lang_menu()
-        //save_settings()
+	lang_code = settings_lang
+    if lang_code = 0
+        lang_code = lang_show()
+
+        settings_lang = lang_code
+        settings_saveSettings()
     endif
     set_texts()
 endfunction
 
-function lang_loop()
-	x as integer
-	y as integer
-	
-    while lang = 0
-        if GetPointerPressed() = 1
-             x = ScreenToWorldX(GetPointerX())
-            y = ScreenToWorldY(GetPointerY())
-            if GetSpriteHitTest(lang_sprite_sv, x, y) = 1 then lang = 1
-            if GetSpriteHitTest(lang_sprite_en, x, y) = 1 then lang = 2
+function lang_show()
+	buttons as BUTTON_BUTTON[2]
+	buttons[1] = button_createButton("Svenska", 150, buttonImageUp, buttonImageDown, 50)
+	buttons[2] = button_createButton("English", 250, buttonImageUp, buttonImageDown, 50)
+	ret as integer
+	do
+        if GetPointerState() = 1
+			ret = button_getPressedButton(buttons)
+			if ret <> 0
+				exit
+			endif
         endif
 
-        sync()
-    endwhile
-endfunction
+        Sync()
+	loop
 
-function init_lang_menu()
-    lang_img_en = LoadImage("btn_lang_en.png")
-    lang_img_sv = LoadImage("btn_lang_sv.png")
-    lang_sprite_en = CreateSprite( lang_img_en )
-    lang_sprite_sv = CreateSprite( lang_img_sv )
-    SetSpritePosition(lang_sprite_en, 60, 100)
-    SetSpritePosition(lang_sprite_sv, 60, 160)
-endfunction
+	button_destroyButtons(buttons)
 
-function delete_lang_menu()
-    DeleteSprite(lang_sprite_en)
-    DeleteSprite(lang_sprite_sv)
-    DeleteImage(lang_sprite_en)
-    DeleteImage(lang_sprite_sv)
-endfunction
+
+endfunction ret
+
 
 function lang_getText(idx)
 foo as string
@@ -64,7 +53,7 @@ endfunction res
 function set_texts()
 DIM texts[20] as String
 foo as string
-    select lang
+    select lang_code
         case 1:
         texts[0] = "Svenska"
         texts[1] = "Start"

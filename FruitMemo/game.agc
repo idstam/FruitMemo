@@ -82,7 +82,7 @@ function game_playTrail(trail as integer[], tiles as button_BUTTON[])
 	i as integer
 	for i = 1 to trail.length
 		SetSpriteImage(tiles[trail[i]].Sprite, tiles[trail[i]].ImageDown)
-		button_pause(0.7)
+		button_pause(0.6)
 		SetSpriteImage(tiles[trail[i]].Sprite, tiles[trail[i]].ImageUp)
 		button_pause(0.4)
 	next i
