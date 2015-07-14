@@ -23,6 +23,8 @@ function credits_show()
 	menueItems[2] = button_createButton(lang_getText(10), 240, buttonImageUp, buttonImageDown, 40)
 	
 	do
+		if GetRawKeyState(27) = 1 then exitfunction
+		
         if GetPointerState() = 1
             if button_buttonHitTest(menueItems[1]) = 1
                 exit

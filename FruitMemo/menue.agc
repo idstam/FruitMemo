@@ -83,12 +83,19 @@ function button_buttonHitTest(button as button_BUTTON)
 	ret as integer
 	x as integer
 	y as integer
+	x = ScreenToWorldX(GetPointerX())
+	y = ScreenToWorldY(GetPointerY())
+	
+	ret = button_buttonHitTest2(button, x, y)
+	
+endfunction ret
+
+function button_buttonHitTest2(button as button_BUTTON, x as integer, y as integer)
+	ret as integer
 
 	//Check if the button is touched
 	ret = 0
 	
-	x = ScreenToWorldX(GetPointerX())
-	y = ScreenToWorldY(GetPointerY())
 	if GetSpriteHitTest(button.Sprite, x, y) = 1 then ret = 1
 	if ret = 0
 		if GetTextHitTest(button.Text, x, y) = 1 then ret = 1
@@ -106,6 +113,7 @@ function button_buttonHitTest(button as button_BUTTON)
 	endif	
 endfunction ret
 
+
 function button_pause(p as float)
 	i as integer
 	t as float
@@ -119,9 +127,14 @@ endfunction
 
 function button_getPressedButton(buttons as button_BUTTON[])
 	i as integer
+	x as integer
+	y as integer
+
+	x = ScreenToWorldX(GetPointerX())
+	y = ScreenToWorldY(GetPointerY())
 	
 	for i = 1 to 4
-		if button_buttonHitTest(buttons[i]) = 1 
+		if button_buttonHitTest2(buttons[i], x, y) = 1 
 			exitfunction i
 		endif
 	next i

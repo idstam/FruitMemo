@@ -46,6 +46,8 @@ function enh_show()
 	menueItems[1] = button_createButton(lang_getText(1), buttonTopStart, buttonImageUp, buttonImageDown, 50)
 
 	do
+		if GetRawKeyState(27) = 1 then exitfunction
+		
         if GetPointerState() = 1
             if button_buttonHitTest(menueItems[1]) = 1
                 exit

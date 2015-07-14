@@ -16,6 +16,8 @@ function game_show()
 	trailPos as integer
 	endGame as integer
 	
+	CreateAdvertEx(0, 1, 2, settings_testAd, 10, 0)
+	SetAdvertVisible(1)
 	//Hide the pineapple since we don't want it och the game screen
 	SetSpriteVisible(menueBackgroundSprite, 0)
 	
@@ -67,7 +69,7 @@ function game_show()
 	
 	//Show the pineapple again
 	SetSpriteVisible(menueBackgroundSprite, 1)
-	
+	DeleteAdvert()
 	losingPosition = endGame
 	totalLength = trail.length - 1 //since we got here by failing, the longest successful trail was the last one
 	
@@ -113,7 +115,7 @@ function game_blinkAll(pause as float, tiles as button_BUTTON[])
 	button_downAll(tiles)
 	button_pause(pause)
 	button_upAll(tiles)
-	button_pause(pause)
+	//button_pause(pause)
 endfunction
 
 function game_init(tiles ref as button_BUTTON[])

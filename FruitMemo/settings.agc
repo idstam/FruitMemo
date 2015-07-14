@@ -2,7 +2,11 @@ Global settings_lang as integer
 Global settings_highScore as integer
 Global settings_settingsFile as string
 
+Global settings_testAd as integer = 0
+
 function settings_readSettings()
+	SetAdMobDetails("ca-app-pub-9478306947734356/4504994223")
+	
 	settings_settingsFile = "fruitmemo.jsi"
     
     if GetFileExists(settings_settingsFile) = 1
