@@ -49,7 +49,9 @@ function nhs_show()
 	menueItems[1] = button_createButton(lang_getText(1), buttonTopStart, buttonImageUp, buttonImageDown, 50)
 
 	do
-		if GetRawKeyState(27) = 1 then exitfunction
+		if GetRawKeyState(27) = 1 then 
+			exit
+		endif
 		
         if GetPointerState() = 1
             if button_buttonHitTest(menueItems[1]) = 1
@@ -61,7 +63,7 @@ function nhs_show()
 	loop
 
 	do 
-		if GetPointerState() = 0 then exit
+		if GetPointerState() = 0 and GetRawKeyState(27) = 0 then exit
 		Sync()
 	loop
 	
