@@ -28,10 +28,14 @@ function lang_show()
 	buttons[2] = button_createButton("English", 250, buttonImageUp, buttonImageDown, 50)
 	ret as integer
 	do
+		if GetRawKeyState(27) = 1
+			end
+		endif
+		
         if GetPointerState() = 1
 			ret = button_getPressedButton(buttons)
 			if ret <> 0
-				exit
+				exitfunction ret
 			endif
         endif
 

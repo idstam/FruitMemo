@@ -49,7 +49,7 @@ function nhs_show()
 	menueItems[1] = button_createButton(lang_getText(1), buttonTopStart, buttonImageUp, buttonImageDown, 50)
 
 	do
-		if GetRawKeyState(27) = 1 then 
+		if GetRawKeyState(27) = 1
 			exit
 		endif
 		

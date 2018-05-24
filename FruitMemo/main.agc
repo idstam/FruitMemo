@@ -25,7 +25,6 @@ SetClearColor(150, 210, 234)
 #include "how.agc"
 #include "end_high_score.agc"
 #include "end_no_high_score.agc"
-#include "start.agc"
 
 
 initializeComponents()
